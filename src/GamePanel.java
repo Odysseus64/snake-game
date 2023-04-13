@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 public class GamePanel extends JPanel implements ActionListener {
-    //Наши переменные окон
     private static final int SCREEN_WIDTH = 600;
     private static final int SCREEN_HEIGHT = 600;
     private static final int UNIT_SIZE = 23;
@@ -30,7 +29,6 @@ public class GamePanel extends JPanel implements ActionListener {
         setFocusable(true);
     }
 
-    //Старт игры
     public void startGame() {
         newApple();
         running = true;
@@ -42,7 +40,6 @@ public class GamePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         draw(g);
     }
-    //Обновление кадров и изображение окон
     public void draw(Graphics g) {
         if (running) {
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
@@ -94,26 +91,21 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void checkCollisions() {
-        //checks if head collides with body
         for (int i = bodyPart; i > 0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
                 break;
             }
         }
-        //Проверка, касается ли объект левой границы
         if (x[0] < 0) {
             running = false;
         }
-        //Проверка, касается ли объект правой границы
         if (x[0] > SCREEN_WIDTH) {
             running = false;
         }
-        //Проверка, касается ли объект верхней грацины
         if (y[0] < 0) {
             running = false;
         }
-        //Проверка, касается ли объект нижней границы
         if (y[0] > SCREEN_HEIGHT) {
             running = false;
         }
@@ -122,18 +114,16 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void gameOver(Graphics g) {
-        //Game over Score
         g.setColor(Color.yellow);
         g.setFont(new Font("Ink Free", Font.BOLD, 25));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: " + applesEaten)) / 2, g.getFont().getSize());
-        //Game over text
         g.setColor(Color.white);
         g.setFont(new Font("Ink Free", Font.BOLD, 50));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
     }
-    //Бег
+    //running
     @Override
     public void actionPerformed(ActionEvent e) {
         if (running) {
@@ -143,7 +133,6 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         repaint();
     }
-    //Ключ управление
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
